@@ -1,30 +1,39 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:shopeasy/main.dart';
+import 'package:shopeasy/my_app.dart';
+import 'package:shopeasy/categories_screen.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('MyApp UI Test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the title is rendered.
+    expect(find.text('Shopeasy'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+    // Example of testing widget interactions
+    // Tap on the icon button with the shopping cart icon
+    await tester.tap(find.byIcon(Icons.shopping_cart));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify that the cart screen is displayed
+    expect(find.text('Cart'), findsOneWidget);
+  });
+
+  testWidgets('CategoriesScreen UI Test', (WidgetTester tester) async {
+    // Example of testing the CategoriesScreen
+    await tester.pumpWidget(const MaterialApp(
+      home: CategoriesScreen(category: 'Electronics'),
+    ));
+
+    // Verify that the category title is rendered
+    expect(find.text('Electronics'), findsOneWidget);
+
+    // Example of testing tapping on a grid item
+    await tester.tap(find.text('Product 1'));
+    await tester.pump();
+
+    // Verify that the product detail screen is displayed
+    expect(find.text('Product 1'), findsOneWidget);
   });
 }
