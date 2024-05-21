@@ -1,5 +1,6 @@
 // Importing the necessary Flutter material package
 import 'package:flutter/material.dart';
+import 'product_details_screen.dart'; // Import the ProductDetailsScreen
 
 void main() {
   // Entry point of the application, runApp function starts the app
@@ -204,8 +205,13 @@ class CategoriesScreen extends StatelessWidget {
           // GestureDetector to handle taps on the product tiles
           return GestureDetector(
             onTap: () {
-              // Add the product to the cart
-              _addToCart(context, products[index]);
+              // Navigate to product details screen with the selected product
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductDetailsScreen(product: products[index]),
+                ),
+              );
             },
             child: Card(
               elevation: 3.0, // Elevation of the card
@@ -235,28 +241,6 @@ class CategoriesScreen extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  // Function to add the product to the cart
-  void _addToCart(BuildContext context, Map<String, String> product) {
-    // Implement logic to add the product to the cart
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Item Added to Cart'), // Alert dialog title
-          content: Text('${product['name']} has been added to your cart.'), // Alert dialog content
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('OK'), // OK button
-            ),
-          ],
-        );
-      },
     );
   }
 }
